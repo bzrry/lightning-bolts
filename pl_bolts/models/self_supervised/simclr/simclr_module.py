@@ -291,6 +291,7 @@ class SimCLR(LightningModule):
         parser.add_argument("--warmup_epochs", default=10, type=int, help="number of warmup epochs")
         parser.add_argument("--batch_size", default=128, type=int, help="batch size per gpu")
         parser.add_argument("--use_tpu", action="store_true", help="use tpu")
+        parser.add_argument("--default_root_dir", default=".", type=str, help="dir for checkpoints and logs")
 
         parser.add_argument("--temperature", default=0.1, type=float, help="temperature parameter in training loss")
         parser.add_argument("--weight_decay", default=1e-6, type=float, help="weight decay")
@@ -416,6 +417,7 @@ def cli_main():
         callbacks=callbacks,
         fast_dev_run=args.fast_dev_run,
         tpu_cores=8 if args.use_tpu else None,
+        default_root_dir=args.default_root_dir,
     )
 
     trainer.fit(model, datamodule=dm)
